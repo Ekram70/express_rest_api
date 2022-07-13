@@ -27,7 +27,7 @@ StudentsController.InsertStudent = (req, res) => {
 
 // Read student
 StudentsController.ReadStudent = (req, res) => {
-    const Query = {};
+    const Query = req.query;
     const Projection = 'Name Remarks';
     StudentsModel.find(Query, Projection, (findError, data) => {
         if (!findError) {

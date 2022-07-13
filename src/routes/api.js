@@ -14,6 +14,9 @@ const {
     UpdateStudent,
     DeleteStudent,
 } = require('../controllers/StudentsController');
+const { CreateToken, DecodeToken } = require('../controllers/JWTPractice');
+const { tokenVerify } = require('../middleware/TokenVerifyMiddleware');
+const { tokenIssue } = require('../controllers/TokenIssueController');
 
 // module scaffolding
 const router = express.Router();
@@ -22,11 +25,16 @@ const router = express.Router();
 router.get('/hello-get', Hello);
 router.post('/hello-post', Hello);
 
-// mongoose
-router.post('/insertStudent', InsertStudent);
-router.get('/readStudent', ReadStudent);
-router.put('/updateStudent/:roll', UpdateStudent);
-router.delete('/updateStudent/:roll', DeleteStudent);
+// mongoose crud & apply jwt token
+router.post('/tokenIssue', tokenIssue);
+router.post('/insertStudent', tokenVerify, InsertStudent);
+router.get('/readStudent', tokenVerify, ReadStudent);
+router.put('/updateStudent/:roll', tokenVerify, UpdateStudent);
+router.delete('/deleteStudent/:roll', tokenVerify, DeleteStudent);
+
+// JWT token
+router.get('/createToken', CreateToken);
+router.get('/decodeToken', DecodeToken);
 
 // export the module
 module.exports = router;

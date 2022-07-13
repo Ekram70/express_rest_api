@@ -20,7 +20,7 @@ model.DataSchema = mongoose.Schema(
             required: true,
             unique: true,
         },
-        class: {
+        Class: {
             type: Number,
             required: true,
             min: [1, 'Minimum class is 1 but supplied value is ={VALUE}'],
